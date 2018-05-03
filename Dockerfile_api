@@ -1,0 +1,16 @@
+FROM python:2
+
+RUN groupadd -r gunicorn && useradd -r -g gunicorn gunicorn
+
+
+COPY requirements.txt /tmp/
+RUN pip install -U pip && pip install  --no-cache-dir -r /tmp/requirements.txt
+
+
+WORKDIR /app
+COPY ./app /app
+USER gunicorn
+
+COPY scripts/wait-for-it.sh scripts/run.sh /app/
+
+CMD ["/app/run.sh"]

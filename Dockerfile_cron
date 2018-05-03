@@ -1,0 +1,9 @@
+FROM centos:7
+
+RUN yum install -y cronie which
+
+COPY scripts/wait-for-it.sh scripts/update_cache.sh scripts/bootstrap_app.sh /root/
+COPY scripts/crontab /etc/cron.d/cron_cache
+
+RUN chmod 0644 /etc/cron.d/cron_cache && touch /var/log/cron.log
+CMD ~/bootstrap_app.sh && crond && tail -f /var/log/cron.log

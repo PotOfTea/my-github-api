@@ -1,0 +1,52 @@
+version: '3.6'
+
+services:
+  database:
+    image: postgres
+    restart: always
+    env_file: .env
+    ports:
+      - "${DB_PORT_EXT}:${DB_PORT_INT}"
+    volumes:
+      - ./scripts/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+  redis:
+    image: redis
+    ports:
+      - "${REDIS_PORT_EXT}:${REDIS_PORT_INT}"
+  api-a:
+    build:
+      context: .
+      dockerfile: Dockerfile_api
+    env_file: .env
+    environment:
+        - PRIMARY=TRUE
+    depends_on:
+      - database
+      - redis
+  api-b:
+    build:
+      context: .
+      dockerfile: Dockerfile_api
+    env_file:
+      - .env
+    depends_on:
+      - database
+      - redis
+  proxy:
+    image: nginx
+    env_file: .env
+    volumes:
+      - ./configs/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "${APP_PORT_INT}:${APP_PORT_EXT}"
+    depends_on:
+      - api-b
+      - api-a
+  cron:
+    build:
+      context: .
+      dockerfile: Dockerfile_cron
+    env_file: .env
+    depends_on:
+      - api-a
+      - api-b
