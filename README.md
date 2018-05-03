@@ -13,7 +13,7 @@ Application should be accessible on `http://127.0.0.1:8081` or to test api `http
 
 
 ## Design
-![api][images/api_example.png]
+![Github](https://github.com/PotOfTea/my-github-api/raw/master/images/api_example.png)
 Application consist of 6 components
 * **PROXY** handles routing between api servers
 * **API-A** handles client requests and parse data
@@ -60,9 +60,14 @@ For maintenance
 To run unit test you will need to install python dependecies using: `pip install -r requirements.txt` afterwards execute `python -m unittest discover -s app/`
 
 Application has performance tests which is written using locust framework to execute performance test please start application using command `locust --host=http://0.0.0.0:8081`, `--host` point to application endpoint, afterwards open `http://127.0.0.1:8089` and specify load.
-![api][loucst_test.png]
+![Github](https://github.com/PotOfTea/my-github-api/raw/master/images/loucst_test.png)
+
 
 ## Performance
-Application can about 150 RPS on 4CPU/8GB, main bottle neck at this point is gunicorn configuration, in current default setup is running on 4 worker threads, if I switched to asnyc gevent, I might improve performance considerably
+Application can serve 150 RPS on 4CPU/8GB with 30ms response time, at 1500 RPS respone time drops down to 700ms. 
+
+Main bottle neck at this point is gunicorn configuration, in current default setup it's running on 4 worker threads, if I switched to asnyc gevent, I might improve performance considerably
+
+
 
 
