@@ -4,28 +4,6 @@ from sqlalchemy.sql.expression import text
 from database import db
 import json
 
-#http://blog.mmast.net/sqlalchemy-serialize-json
-
-class User(db.Model):
-    __tablename__ = 'user'
-
-    #id = Column(BIGINT, primary_key=True,autoincrement=True, nullable=False)
-    username = Column(String(32), nullable=False)
-    uuid = Column(UUID, primary_key=True, server_default=text('uuid_generate_v1mc()'))
-    games_played = Column(BIGINT, nullable=False, default=0)
-    score = Column(BIGINT, nullable=False, default=0)
-    friends = Column(ARRAY(UUID, dimensions=1), default=[])
-
-    def __init__(self, username):
-        self.username = username
-
-    def __repr__(self):
-        return '<username {}'.format(self.username)
-
-    def as_json(self):
-        return json.dumps({c.name: getattr(self, c.name) for c in self.__table__.columns})
-
-
 class Github(db.Model):
     __tablename__ = 'github'
 
