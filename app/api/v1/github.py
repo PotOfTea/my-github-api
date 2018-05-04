@@ -110,7 +110,7 @@ def query_github():
 
 def check_rate_limit(response_header):
     if 0 == int(response_header["X-RateLimit-Remaining"]):
-        print("Exceeded rate limit for github, sleeping for 60s")
+        print("Exceeded rate limit for github, sleeping for 10s")
         time.sleep(10)
 
 def parse_pagantion_link(link):
