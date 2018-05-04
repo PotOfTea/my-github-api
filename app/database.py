@@ -20,8 +20,8 @@ def init_db_if_exist():
     else:
         current_app.logger.info("DB exist, skipping...")
 
-    if not schema_exists(engine, "user") or not schema_exists(engine, "github"):
-        from models import User, Github
+    if not schema_exists(engine, "github"):
+        from models import Github
         db.drop_all()
         db.create_all()
     else:
