@@ -18,7 +18,7 @@ pyzmq==16.0.3
 requests==2.18.4
 six==1.11.0
 urllib3==1.22
-Werkzeug==0.12.2
+Werkzeug==0.15.3
 psycopg2==2.7.3.2
 SQLAlchemy==1.1.15
 Flask-SQLAlchemy==2.3.2
